@@ -1,0 +1,35 @@
+apply plugin: 'java'
+apply plugin:'application'
+
+jar {
+    baseName = 'MeetupChallenge'
+    version = '0.1.0'
+}
+
+allprojects {
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+}
+
+
+sourceCompatibility = 1.8
+version = '1.0'
+mainClassName = 'pl.jug.torun.meetup.RandomMachine'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-release" }
+}
+
+dependencies {
+    compile("org.springframework:spring-web")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    compile("org.apache.httpcomponents:httpclient:4.3.5")
+    compile 'org.springframework.data:spring-data-rest-webmvc:2.1.4.RELEASE'
+    compile 'org.controlsfx:controlsfx:8.0.6_20'
+    compile 'org.apache.derby:derby:10.11.1.1'
+}
