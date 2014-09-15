@@ -10,8 +10,12 @@ import java.util.Map;
 
 public class MeetupPath {
 
-    final private String baseUrl = "https://api.meetup.com";
-    final private String key = "1e413cad6b174f1a4475362e1d22";
+    final private static String baseUrl = "https://api.meetup.com";
+    final private String key;
+
+    public MeetupPath(String key) {
+        this.key = key;
+    }
 
     public String getUrl(String path) throws URISyntaxException {
         return getUrl(path, Collections.<String, String>emptyMap());

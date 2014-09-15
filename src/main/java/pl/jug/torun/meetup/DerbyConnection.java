@@ -41,6 +41,7 @@ public class DerbyConnection {
                     + "            (START WITH 1, INCREMENT BY 1),"
                     + "     name VARCHAR(64) NOT NULL DEFAULT ''"
                     + ")");
+            
             conn.commit();
         } catch (SQLException ex) {
             Logger.getLogger(DerbyConnection.class.getName()).log(Level.SEVERE, ex.getMessage());

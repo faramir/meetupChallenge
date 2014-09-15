@@ -18,6 +18,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
@@ -26,6 +29,8 @@ import org.controlsfx.dialog.Dialogs;
 import pl.jug.torun.meetup.api.MeetupClient;
 import pl.jug.torun.meetup.api.MeetupClientImpl;
 import pl.jug.torun.meetup.api.model.Event;
+import pl.jug.torun.meetup.api.model.Member;
+import pl.jug.torun.meetup.model.EventGiveAway;
 import pl.jug.torun.meetup.model.GiveAway;
 
 /**
@@ -50,6 +55,15 @@ public class FXRandomMachineController implements Initializable {
     private TitledPane definedGiveAwaysPane;
 
     @FXML
+    private Tab eventsTab;
+    @FXML
+    private Tab giveAwaysTab;
+    @FXML
+    private Tab membersTab;
+    @FXML
+    private Tab drawTab;
+
+    @FXML
     private TitledPane eventsPane;
 
     @FXML
@@ -65,7 +79,11 @@ public class FXRandomMachineController implements Initializable {
     private Button cancelButton;
 
     @FXML
-    private ListView<GiveAway> giveAwaysListView;
+    private TableView<EventGiveAway> giveAwaysTableView;
+    @FXML
+    private TableColumn<EventGiveAway, String> giveAwaysNameColumn;
+    @FXML
+    private TableColumn<EventGiveAway, String> giveAwaysMemberColumn;
 
     @FXML
     private ListView<GiveAway> definedGiveAwaysListView;
@@ -77,7 +95,7 @@ public class FXRandomMachineController implements Initializable {
     private ListView<Event> eventsListView;
 
     @FXML
-    private ListView<?> eventMembersListView;
+    private ListView<Member> eventMembersListView;
 
     @FXML
     private Button drawButton;
@@ -107,10 +125,10 @@ public class FXRandomMachineController implements Initializable {
 
     @FXML
     void handleDeleteGiveAway(ActionEvent event) {
-        if (giveAwaysListView.getSelectionModel().isEmpty() == false) {
-            GiveAway selectedGiveAway = giveAwaysListView.getSelectionModel().getSelectedItem();
-            derbyDB.deleteDefinedGiveAway(selectedGiveAway);
-            giveAwaysListView.getItems().remove(selectedGiveAway);
+        if (giveAwaysTableView.getSelectionModel().isEmpty() == false) {
+            EventGiveAway selectedGiveAway = giveAwaysTableView.getSelectionModel().getSelectedItem();
+//            derbyDB.deleteEventGiveAway(selectedGiveAway);
+            giveAwaysTableView.getItems().remove(selectedGiveAway);
         }
     }
 
@@ -120,8 +138,9 @@ public class FXRandomMachineController implements Initializable {
             int count = Integer.parseInt(giveAwayCount.getText());
 
             GiveAway selectedGiveAway = giveAwayCombo.getSelectionModel().getSelectedItem();
+            EventGiveAway eventGiveAway = new EventGiveAway(selectedGiveAway.getName(), null);
             while (count-- > 0) {
-                giveAwaysListView.getItems().add(selectedGiveAway);
+                giveAwaysTableView.getItems().add(eventGiveAway);
             }
         } catch (NumberFormatException ex) {
             Dialogs.create()
@@ -139,7 +158,9 @@ public class FXRandomMachineController implements Initializable {
 
     @FXML
     void handleRefreshEventsListView(ActionEvent event) {
+        eventsPane.setDisable(true);
         eventsListView.setItems(FXCollections.observableArrayList(meetupClient.getEvents("Torun-JUG")));
+        eventsPane.setDisable(false);
     }
 
     @FXML
@@ -158,10 +179,21 @@ public class FXRandomMachineController implements Initializable {
     }
 
     @FXML
-    private void handleEventsListViewClicked(MouseEvent event) {
-        if (event.getClickCount() >= 2) {
-            System.out.println("onClicked: " + event.getClickCount());
+    private void handleEventsListViewClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.getClickCount() < 2) {
+            return;
         }
+
+        giveAwaysTab.setDisable(true);
+        membersTab.setDisable(true);
+        drawTab.setDisable(true);
+
+        Event event = eventsListView.getSelectionModel().getSelectedItem();
+        eventMembersListView.setItems(FXCollections.observableArrayList(meetupClient.getMembers(event.getId())));
+
+        giveAwaysTab.setDisable(false);
+        membersTab.setDisable(false);
+        drawTab.setDisable(false);
     }
 
     @Override
@@ -173,9 +205,16 @@ public class FXRandomMachineController implements Initializable {
         giveAwayCombo.setItems(definedGiveAwaysObservableList);
         giveAwayCombo.getSelectionModel().select(0);
 
+        giveAwaysNameColumn.setCellValueFactory(value -> value.getValue().getGiveAwayNameProperty());
+        giveAwaysMemberColumn.setCellValueFactory(value -> value.getValue().getMemberNameProperty());
+
         accordion.setExpandedPane(eventsPane);
 
         handleRefreshEventsListView(null);
+
+        giveAwaysTab.setDisable(true);
+        membersTab.setDisable(true);
+        drawTab.setDisable(true);
     }
 
 }

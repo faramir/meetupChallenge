@@ -36,7 +36,7 @@
       <content>
             <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <tabs>
-                <Tab text="Lista wydarzeń">
+                <Tab fx:id="eventsTab" text="Lista wydarzeń">
                      <content>
                         <ListView fx:id="eventsListView" onMouseClicked="#handleEventsListViewClicked" prefHeight="200.0" prefWidth="200.0">
                            <contextMenu>
@@ -48,11 +48,15 @@
                            </contextMenu></ListView>
                      </content>
                   </Tab>
-                <Tab text="Nagrody">
+                <Tab fx:id="giveAwaysTab" text="Nagrody">
                      <content>
                         <VBox alignment="CENTER">
                            <children>
-                              <ListView fx:id="giveAwaysListView" VBox.vgrow="ALWAYS">
+                              <TableView fx:id="giveAwaysTableView">
+                                <columns>
+                                  <TableColumn fx:id="giveAwaysNameColumn" editable="false" minWidth="-Infinity" prefWidth="300.0" text="Nagroda" />
+                                  <TableColumn fx:id="giveAwaysMemberColumn" editable="false" minWidth="-Infinity" prefWidth="300.0" text="Uczestnik" />
+                                </columns>
                                  <contextMenu>
                                     <ContextMenu>
                                       <items>
@@ -60,10 +64,10 @@
                                       </items>
                                     </ContextMenu>
                                  </contextMenu>
-                              </ListView>
+                              </TableView>
                               <HBox>
                                  <children>
-                                    <ComboBox fx:id="giveAwayCombo" prefHeight="25.0" prefWidth="490.0" HBox.hgrow="ALWAYS" />
+                                    <ComboBox fx:id="giveAwayCombo" prefHeight="25.0" prefWidth="522.0" HBox.hgrow="ALWAYS" />
                                     <TextField fx:id="giveAwayCount" onAction="#handleAddGiveAway" prefHeight="25.0" prefWidth="51.0" promptText="Ilość" text="1" HBox.hgrow="NEVER" />
                                     <Button mnemonicParsing="false" onAction="#handleAddGiveAway" text="Dodaj" HBox.hgrow="NEVER" />
                                  </children>
@@ -72,7 +76,7 @@
                         </VBox>
                      </content>
                   </Tab>
-                  <Tab text="Uczestnicy">
+                  <Tab fx:id="membersTab" text="Uczestnicy">
                     <content>
                         <ListView fx:id="eventMembersListView" layoutX="149.0" layoutY="-8.0">
                            <contextMenu>
@@ -85,7 +89,7 @@
                         </ListView>
                     </content>
                   </Tab>
-                  <Tab text="Losowanie">
+                  <Tab fx:id="drawTab" text="Losowanie">
                      <content>
                         <VBox alignment="CENTER">
                            <children>

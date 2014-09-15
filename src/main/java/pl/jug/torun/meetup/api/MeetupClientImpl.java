@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import pl.jug.torun.meetup.Configuration;
 import pl.jug.torun.meetup.api.model.Event;
 import pl.jug.torun.meetup.api.model.EventList;
 import pl.jug.torun.meetup.api.model.EventMemberList;
@@ -13,9 +14,12 @@ import pl.jug.torun.meetup.api.model.Member;
 
 public class MeetupClientImpl implements MeetupClient {
 
-    final private MeetupPath meetupPath = new MeetupPath();
-
     final private RestTemplate restTemplate = new RestTemplate();
+    final private MeetupPath meetupPath;
+
+    public MeetupClientImpl() {
+        this.meetupPath = new MeetupPath(Configuration.INSTANCE.getKey());
+    }
 
     @Override
     public List<Event> getEvents(String groupName) {

@@ -10,9 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pl.jug.torun.meetup.api.MeetupClient;
-import pl.jug.torun.meetup.api.MeetupClientImpl;
-import pl.jug.torun.meetup.api.MeetupPath;
 
 /**
  *

@@ -24,4 +24,10 @@ public class Member {
     public void setMemberId(Integer memberId) {
         this.memberId = memberId;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }
