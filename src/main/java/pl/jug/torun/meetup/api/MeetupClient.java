@@ -6,8 +6,8 @@
 package pl.jug.torun.meetup.api;
 
 import java.util.List;
-import pl.jug.torun.meetup.api.model.Event;
-import pl.jug.torun.meetup.api.model.Member;
+import pl.jug.torun.meetup.model.Event;
+import pl.jug.torun.meetup.model.Member;
 
 /**
  *

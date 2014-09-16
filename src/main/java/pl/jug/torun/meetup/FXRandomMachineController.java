@@ -28,8 +28,8 @@ import javafx.stage.Stage;
 import org.controlsfx.dialog.Dialogs;
 import pl.jug.torun.meetup.api.MeetupClient;
 import pl.jug.torun.meetup.api.MeetupClientImpl;
-import pl.jug.torun.meetup.api.model.Event;
-import pl.jug.torun.meetup.api.model.Member;
+import pl.jug.torun.meetup.model.Event;
+import pl.jug.torun.meetup.model.Member;
 import pl.jug.torun.meetup.model.EventGiveAway;
 import pl.jug.torun.meetup.model.GiveAway;
 
@@ -138,8 +138,10 @@ public class FXRandomMachineController implements Initializable {
             int count = Integer.parseInt(giveAwayCount.getText());
 
             GiveAway selectedGiveAway = giveAwayCombo.getSelectionModel().getSelectedItem();
-            EventGiveAway eventGiveAway = new EventGiveAway(selectedGiveAway.getName(), null);
             while (count-- > 0) {
+                EventGiveAway eventGiveAway = new EventGiveAway();
+                eventGiveAway.setGiveAway(selectedGiveAway);
+                // TODO: add giveAway to the base
                 giveAwaysTableView.getItems().add(eventGiveAway);
             }
         } catch (NumberFormatException ex) {
@@ -205,8 +207,11 @@ public class FXRandomMachineController implements Initializable {
         giveAwayCombo.setItems(definedGiveAwaysObservableList);
         giveAwayCombo.getSelectionModel().select(0);
 
-        giveAwaysNameColumn.setCellValueFactory(value -> value.getValue().getGiveAwayNameProperty());
-        giveAwaysMemberColumn.setCellValueFactory(value -> value.getValue().getMemberNameProperty());
+        giveAwaysNameColumn.setCellValueFactory(value -> value.getValue().getGiveAway().getNameProperty());
+        giveAwaysMemberColumn.setCellValueFactory(value
+                -> value.getValue().getMember() == null ? null
+                        : value.getValue().getMember().getNameProperty()
+        );
 
         accordion.setExpandedPane(eventsPane);
 

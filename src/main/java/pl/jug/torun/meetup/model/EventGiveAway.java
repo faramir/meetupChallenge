@@ -15,13 +15,9 @@ import javafx.beans.property.StringProperty;
 public class EventGiveAway {
 
     private int id;
-    private StringProperty giveAwayNameProperty;
-    private StringProperty memberNameProperty;
-
-    public EventGiveAway(String giveAwayName, String memberName) {
-        this.giveAwayNameProperty = new SimpleStringProperty(giveAwayName);
-        this.memberNameProperty = new SimpleStringProperty(memberName);
-    }
+    private Event event;
+    private GiveAway giveAway;
+    private Member member;
 
     public int getId() {
         return id;
@@ -31,28 +27,28 @@ public class EventGiveAway {
         this.id = id;
     }
 
-    public String getGiveAwayName() {
-        return getGiveAwayNameProperty().get();
+    public Event getEvent() {
+        return event;
     }
 
-    public void setGiveAwayName(String giveAwayName) {
-        this.getGiveAwayNameProperty().set(giveAwayName);
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
-    public String getMemberName() {
-        return getMemberNameProperty().get();
+    public GiveAway getGiveAway() {
+        return giveAway;
     }
 
-    public void setMemberName(String memberName) {
-        this.getMemberNameProperty().set(memberName);
+    public void setGiveAway(GiveAway giveAway) {
+        this.giveAway = giveAway;
     }
 
-    public StringProperty getGiveAwayNameProperty() {
-        return giveAwayNameProperty;
+    public Member getMember() {
+        return member;
     }
 
-    public StringProperty getMemberNameProperty() {
-        return memberNameProperty;
+    public void setMember(Member member) {
+        this.member = member;
     }
 
 }

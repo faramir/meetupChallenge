@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import pl.jug.torun.meetup.Configuration;
-import pl.jug.torun.meetup.api.model.Event;
-import pl.jug.torun.meetup.api.model.EventList;
-import pl.jug.torun.meetup.api.model.EventMemberList;
-import pl.jug.torun.meetup.api.model.Member;
+import pl.jug.torun.meetup.model.Event;
+import pl.jug.torun.meetup.model.EventList;
+import pl.jug.torun.meetup.model.EventMemberList;
+import pl.jug.torun.meetup.model.Member;
 
 public class MeetupClientImpl implements MeetupClient {
 

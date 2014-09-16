@@ -1,4 +1,4 @@
-package pl.jug.torun.meetup.api.model;
+package pl.jug.torun.meetup.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

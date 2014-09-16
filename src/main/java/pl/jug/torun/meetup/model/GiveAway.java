@@ -5,6 +5,9 @@
  */
 package pl.jug.torun.meetup.model;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author faramir
@@ -12,14 +15,14 @@ package pl.jug.torun.meetup.model;
 public class GiveAway {
 
     private int id;
-    private String name;
+    final private StringProperty nameProperty = new SimpleStringProperty();
 
     public GiveAway() {
     }
 
     public GiveAway(int id, String name) {
         this.id = id;
-        this.name = name;
+        this.nameProperty.set(name);
     }
 
     /**
@@ -40,18 +43,22 @@ public class GiveAway {
      * @return the name
      */
     public String getName() {
-        return name;
+        return getNameProperty().get();
     }
 
     /**
      * @param name the name to set
      */
     public void setName(String name) {
-        this.name = name;
+        this.getNameProperty().set(name);
     }
 
     @Override
     public String toString() {
-        return name;
+        return getNameProperty().get();
+    }
+
+    public StringProperty getNameProperty() {
+        return nameProperty;
     }
 }
